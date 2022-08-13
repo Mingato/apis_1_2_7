@@ -1,0 +1,60 @@
+POST /v1/oauth
+GET  /v1/shipping/list
+POST /v1/shipping/{postcep}/{method}
+GET  /v1/payment/list
+PUT  /v1/customer/insert
+POST /v1/customer/update/{id}
+GET  /v1/customer/{cld}/address/{list|ald}
+PUT  /v1/customer/{id}/address
+GET  /v1/category/tree/{id}
+GET  /v1/category/{id}
+POST /v1/category/insert
+POST /v1/category/update/{id}
+POST /v1/product/insert
+POST /v1/product/update/{id}
+POST /v1/product/search
+POST /v1/product/list
+GET  /v1/product/{id}
+GET  /v1/product/{id}/attributes
+PUT  /v1/product/{id}/attributes/insert
+POST /v1/product/{id}/attributes/update
+GET  /v1/product/stock
+POST /v1/product/stock
+POST /v1/product/price
+POST /v1/product/promo
+POST /v1/attributes/insert
+POST /v1/attributes/insert
+POST /v1/attributes/update/{id}
+GET  /v1/manufacturer/list
+POST /v1/manufacturer/insert
+POST /v1/manufacturer/update/{id}
+PUT  /v1/order/insert
+POST /v1/order/list
+GET  /v1/order/{id}
+PUT  /v1/order/{id}/status
+GET  /v1/order/{id}/status/list
+POST /v1/webhook  	----- WebHooks: envia notificações
+DELETE /v1/webhook
+POST /v1/mailing/({newsletter|customer})
+
+
+preparação do projeto - 4 horas
+
+temos 38 APIs - 38 horas
+	11 GET + 1 DELETE = 12 
+	tempo: 1 h
+
+	22 POST + 5 PUT = 27
+	tempo: 1 h
+
+temos 9 classes - 3 horas
+	shipping,payment,customer,category,product,attributes,manufacturer,order,webhook
+
+
+total de 50 horas
+
+50 reais/hora
+
+total 2.500
+
+
