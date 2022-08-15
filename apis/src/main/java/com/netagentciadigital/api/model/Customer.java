@@ -48,24 +48,4 @@ public class Customer {
         @NotBlank
         private String telephone;
     }
-
-    @Data
-    @Builder
-    @Entity
-    public static class MyAddress {
-        @NotBlank
-        private String postcode;
-        @NotBlank
-        private String street;
-        @NotNull
-        private int number;
-        @NotBlank
-        private String complement;
-        @NotBlank
-        private String suburb;
-        @NotBlank
-        private String city;
-        @NotBlank
-        private String state;
-    }
 }
