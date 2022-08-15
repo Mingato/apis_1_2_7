@@ -4,25 +4,25 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
-import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Data
 @Builder
 @Entity
-@Table(name="product", schema = "pub")
-public class Product {
+@Table(name="shipping", schema = "pub")
+public class Shipping {
 
     @Id
     private String id;
 
-    private String name;
+    private String title;
+
+    private String image;
 
     private String description;
 
-    private BigDecimal value;
-
-    private int quantity;
+    private boolean status;
 
 }

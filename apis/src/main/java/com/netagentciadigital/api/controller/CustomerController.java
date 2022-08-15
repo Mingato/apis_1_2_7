@@ -1,8 +1,8 @@
 package com.netagentciadigital.api.controller;
 
-import com.netagentciadigital.api.model.Product;
+import com.netagentciadigital.api.model.Customer;
 import com.netagentciadigital.api.model.response.ApiResponseBody;
-import com.netagentciadigital.api.service.ProductService;
+import com.netagentciadigital.api.service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,27 +11,26 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Validated
 @Slf4j
 @RestController
-@RequestMapping("/v1/products")
-public class ProductController {
+@RequestMapping("/v1/customers")
+public class CustomerController {
 
 
-    private final ProductService productService;
+    private final CustomerService customerService;
 
     @Autowired
-    public ProductController(ProductService productService) {
-        this.productService = productService;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     @GetMapping
     public ResponseEntity<ApiResponseBody> getAll(@RequestParam(value = "name", required = false) String name){
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
-                .result(productService.filter(name))
+                .result(customerService.filter(name))
             .build();
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -42,39 +41,30 @@ public class ProductController {
         log.info(id);
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
-                .result(productService.findById(id))
+                .result(customerService.findById(id))
             .build();
-        result.put("productID",id);
+        result.put("CustomerID",id);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseBody> create(@RequestBody @Valid List<Product> products){
+    public ResponseEntity<ApiResponseBody> create(@RequestBody @Valid Customer customer){
+        customer = customerService.create(customer);
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
-                .result(productService.create(products))
+                .result(customer)
             .build();
+        result.put("customerID",customer.getId());
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseBody> update(@PathVariable("id") String id, @RequestBody @Valid Product product){
+    public ResponseEntity<ApiResponseBody> update(@PathVariable("id") String id, @RequestBody @Valid Customer customer){
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
-                .result(productService.update(id, product))
-            .build();
-
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponseBody> delete(@PathVariable("id") String id){
-        ApiResponseBody result = ApiResponseBody.builder()
-                .status("200")
-                .result(productService.delete(id))
+                .result(customerService.update(id, customer))
             .build();
 
         return new ResponseEntity<>(result, HttpStatus.OK);

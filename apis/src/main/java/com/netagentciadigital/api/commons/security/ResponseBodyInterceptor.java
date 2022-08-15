@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.http.server.ServletServerHttpResponse;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  *
@@ -26,7 +28,7 @@ import java.util.Objects;
  *	Coloca Token no Cookie e retira do body
  */
 @ControllerAdvice
-public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2AccessToken>{
+public class ResponseBodyInterceptor implements ResponseBodyAdvice<Object>{
 
     @Value("${application.security.enable-https}")
     private boolean enableHttps;
@@ -39,16 +41,43 @@ public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2Acces
      * */
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return Objects.requireNonNull(returnType.getMethod()).getName().equals("postAccessToken");
+        return AbstractJackson2HttpMessageConverter.class.isAssignableFrom(converterType);
     }
 
     @Override
-    public OAuth2AccessToken beforeBodyWrite(OAuth2AccessToken body, MethodParameter returnType,
-                                             MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType,
-                                             ServerHttpRequest request, ServerHttpResponse response) {
+    public Object beforeBodyWrite(@Nullable Object body,
+                                  @NonNull MethodParameter returnType,
+                                  @NonNull MediaType contentType,
+                                  @NonNull Class<? extends HttpMessageConverter<?>> converterType,
+                                  @NonNull ServerHttpRequest request,
+                                  @NonNull ServerHttpResponse response) {
 
-        HttpServletRequest req  = ((ServletServerHttpRequest) request).getServletRequest();
-        HttpServletResponse resp  = ((ServletServerHttpResponse) response).getServletResponse();
+        if(body instanceof OAuth2AccessToken) {
+            return getOAuth2AccessToken((OAuth2AccessToken)body, (ServletServerHttpRequest) request, (ServletServerHttpResponse) response);
+        }
+
+        return body;//countRequestsLimit(body, (ServletServerHttpRequest) request, (ServletServerHttpResponse) response);
+    }
+
+    /*private Object countRequestsLimit(Object body, ServletServerHttpRequest request, ServletServerHttpResponse response) {
+        HttpServletRequest req  = request.getServletRequest();
+        HttpServletResponse resp  = response.getServletResponse();
+
+        addCountRequestsLimit(req, resp);
+
+        return body;
+    }
+
+    private void addCountRequestsLimit(HttpServletRequest req, HttpServletResponse resp) {
+
+        resp.addHeader("api-request-counter", "1");
+        resp.addHeader("api-request-limit", "1");
+        resp.addHeader("api-request-expire", "1");
+    }*/
+
+    private OAuth2AccessToken getOAuth2AccessToken(OAuth2AccessToken body, ServletServerHttpRequest request, ServletServerHttpResponse response) {
+        HttpServletRequest req  = request.getServletRequest();
+        HttpServletResponse resp  = response.getServletResponse();
 
         DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) body;
 

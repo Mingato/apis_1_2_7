@@ -1,9 +1,12 @@
 package com.netagentciadigital.api.commons.security;
 
+import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.LoadingCache;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.util.ParameterMap;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +17,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -23,18 +27,39 @@ import java.util.*;
 @Component
 @Slf4j
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class RefreshTokenPreProcessorFilter implements Filter {
+public class RequestPreProcessorFilter implements Filter {
 
+    private final int API_REQUEST_LIMIT = 180;
+    private final int API_REQUESTS_EXPIRE_SECONDS = 60;
+
+    private final LoadingCache<String, Integer> requestCountsPerIpAddress;
+
+
+    public RequestPreProcessorFilter(){
+        requestCountsPerIpAddress = Caffeine.newBuilder().
+                expireAfterWrite(API_REQUESTS_EXPIRE_SECONDS, TimeUnit.SECONDS).build(key -> 0);
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String refreshToken = "";
-        HttpServletRequest req  = ((HttpServletRequest) request);//.getServletRequest();
+        HttpServletRequest req  = ((HttpServletRequest) request);
         HttpServletResponse resp  = ((HttpServletResponse) response);
+
+        if (verifyLimitsRequestsPerClient(req, resp)){
+            return;
+        }
 
         log.info(req.getMethod() +" " + req.getRequestURI() +
                 (req.getQueryString() != null ? "?" + req.getQueryString(): ""));
 
+
+        req = verifyURIs(req);
+
+        chain.doFilter(req, resp);
+    }
+
+    private HttpServletRequest verifyURIs(HttpServletRequest req) {
+        String refreshToken = "";
         if(req.getRequestURI().contains("/oauth/token")
                 && "refresh_token".equalsIgnoreCase(req.getParameter("grant_type"))
                 && req.getCookies() != null) {
@@ -68,9 +93,48 @@ public class RefreshTokenPreProcessorFilter implements Filter {
             }
 
         }
-
-        chain.doFilter(req, resp);
+        return req;
     }
+
+    private boolean verifyLimitsRequestsPerClient(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String clientIpAddress = getClientIP(req);
+        if(isMaximumRequestsPerSecondExceeded(clientIpAddress, resp)){
+            resp.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
+            resp.getWriter().write("Too many requests");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isMaximumRequestsPerSecondExceeded(String clientIpAddress, HttpServletResponse resp){
+        Integer requests = 0;
+        requests = requestCountsPerIpAddress.get(clientIpAddress);
+        if(requests != null){
+            if(requests > API_REQUEST_LIMIT) {
+                requestCountsPerIpAddress.asMap().remove(clientIpAddress);
+                requestCountsPerIpAddress.put(clientIpAddress, requests);
+                return true;
+            }
+
+        } else {
+            requests = 0;
+        }
+        requests++;
+        requestCountsPerIpAddress.put(clientIpAddress, requests);
+        resp.addHeader("api-request-counter", String.valueOf(requests));
+        resp.addHeader("api-request-limit", String.valueOf(API_REQUEST_LIMIT));
+        resp.addHeader("api-request-expire", String.valueOf(API_REQUESTS_EXPIRE_SECONDS));
+        return false;
+    }
+
+    public String getClientIP(HttpServletRequest request) {
+        String xfHeader = request.getHeader("X-Forwarded-For");
+        if (xfHeader == null){
+            return request.getRemoteAddr();
+        }
+        return xfHeader.split(",")[0]; // voor als ie achter een proxy zit
+    }
+
 
     public JwtAccessTokenConverter accessTokenConverter() {
         return new JwtAccessTokenConverter();
