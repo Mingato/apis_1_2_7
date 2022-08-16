@@ -38,8 +38,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseBody> findById(@PathVariable("id") String id){
-        log.info(id);
+    public ResponseEntity<ApiResponseBody> findById(@PathVariable("id") Long id){
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
                 .result(productService.findById(id))
@@ -60,7 +59,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseBody> update(@PathVariable("id") String id, @RequestBody @Valid Product product){
+    public ResponseEntity<ApiResponseBody> update(@PathVariable("id") Long id, @RequestBody @Valid Product product){
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
                 .result(productService.update(id, product))
@@ -69,15 +68,5 @@ public class ProductController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponseBody> delete(@PathVariable("id") String id){
-        ApiResponseBody result = ApiResponseBody.builder()
-                .status("200")
-                .result(productService.delete(id))
-            .build();
-
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
 
 }

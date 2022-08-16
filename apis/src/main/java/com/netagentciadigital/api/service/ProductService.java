@@ -21,7 +21,7 @@ public class ProductService {
     }
 
 
-    public Product findById(String id) {
+    public Product findById(Long id) {
         Optional<Product> product = productRepository.findById(id);
         if(product.isEmpty()){
             throw new DataNotFoundException("Product with id '" + id + "' not found!");
@@ -42,7 +42,7 @@ public class ProductService {
         return productRepository.saveAll(products);
     }
 
-    public Product update(String id, Product product) {
+    public Product update(Long id, Product product) {
         Product productOld = findById(id);
 
         product.setId(productOld.getId());
@@ -50,10 +50,5 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public Product delete(String id) {
-        Product product = findById(id);
-        productRepository.deleteById(id);
-        return product;
-    }
 
 }

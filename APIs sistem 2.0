@@ -6,11 +6,13 @@ POST /v1/customer
 PUT  /v1/customer/{id}
 GET  /v1/customer/{cld}/address/{list|ald}
 POST /v1/customer/{id}/address
-----------------
 GET  /v1/category/tree/{id}
 GET  /v1/category/{id}
 POST /v1/category
 PUT  /v1/category/{id}
+----------------
+POST /v1/attributes
+PUT  /v1/attributes/{id}
 POST /v1/product
 PUT  /v1/product/{id}
 POST /v1/product/search
@@ -23,8 +25,6 @@ GET  /v1/product/stock
 POST /v1/product/stock
 POST /v1/product/price
 POST /v1/product/promo
-POST /v1/attributes
-PUT  /v1/attributes/{id}
 GET  /v1/manufacturer
 POST /v1/manufacturer
 PUT  /v1/manufacturer/{id}

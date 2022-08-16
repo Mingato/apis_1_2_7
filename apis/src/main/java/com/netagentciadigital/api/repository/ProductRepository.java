@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, String> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findByNameLike(String name);
 
