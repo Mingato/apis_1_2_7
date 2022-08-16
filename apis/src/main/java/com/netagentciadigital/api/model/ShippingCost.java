@@ -15,7 +15,6 @@ import java.util.List;
 @Data
 @Builder
 @Entity
-@Table(name="shipping", schema = "pub")
 public class ShippingCost {
 
 

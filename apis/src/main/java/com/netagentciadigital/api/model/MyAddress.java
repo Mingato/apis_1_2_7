@@ -5,17 +5,18 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
 @Entity
+@Table(name="address", schema = "pub")
 public class MyAddress {
 
     @Id
-    @NotBlank
-    private String id;
+    private Long id;
     @NotBlank
     private String firstname;
     @NotBlank

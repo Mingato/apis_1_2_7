@@ -12,12 +12,12 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface AddressRepository extends JpaRepository<MyAddress, String> {
+public interface AddressRepository extends JpaRepository<MyAddress, Long> {
 
 
     //TODO:query esta errada é um create
     @Query(value = "SELECT * FROM "+ DBInfos.ADDRESS_TABLE_NAME +" u "+
             "INNER JOIN " + DBInfos.ADDRESS_CUSTOMER_TABLE_NAME + " grp_usr ON u.id_usuario = grp_usr.id_usuario " +
             "where grp.cod_grp in ?1 AND grp.ativo = true AND grp.tipo = 'padrao'", nativeQuery = true)
-    MyAddress saveByCustomerId(String cid, MyAddress address);
+    MyAddress saveByCustomerId(Long cid, MyAddress address);
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -17,7 +18,9 @@ public class Payment {
 
     @Id
     private String id;
+    @NotBlank
     private String type;
+    @NotBlank
     private String title;
     private String image;
     private boolean status;

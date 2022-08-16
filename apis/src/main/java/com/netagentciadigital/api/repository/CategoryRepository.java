@@ -1,7 +1,6 @@
 package com.netagentciadigital.api.repository;
 
-import com.netagentciadigital.api.model.Customer;
-import com.netagentciadigital.api.model.Product;
+import com.netagentciadigital.api.model.CategoryDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,10 +12,8 @@ import java.util.List;
  */
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+public interface CategoryRepository extends JpaRepository<CategoryDetails, Long> {
 
-    Customer findByEmail(String email);
-
-    List<Customer> findByNameLike(String name);
+    List<CategoryDetails> findByTitleLike(String title);
 
 }

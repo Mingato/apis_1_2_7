@@ -42,8 +42,8 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseBody> findById(@PathVariable("id") String id){
-        log.info(id);
+    public ResponseEntity<ApiResponseBody> findById(@PathVariable("id") Long id){
+        log.info(String.valueOf(id));
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
                 .result(customerService.findById(id))
@@ -66,7 +66,7 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseBody> update(@PathVariable("id") String id, @RequestBody @Valid Customer customer){
+    public ResponseEntity<ApiResponseBody> update(@PathVariable("id") Long id, @RequestBody @Valid Customer customer){
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
                 .result(customerService.update(id, customer))
@@ -76,7 +76,7 @@ public class CustomerController {
     }
 
     @GetMapping("/{cid}/address/{id}")
-    public ResponseEntity<ApiResponseBody> getAddress(@PathVariable("cid") String cid, @PathVariable("id") String id){
+    public ResponseEntity<ApiResponseBody> getAddress(@PathVariable("cid") Long cid, @PathVariable("id") Long id){
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
                 .result(addressService.findByIdCustomerAndId(cid,id))
@@ -86,7 +86,7 @@ public class CustomerController {
     }
 
     @PostMapping("/{cid}/address")
-    public ResponseEntity<ApiResponseBody> createAddress(@PathVariable("cid") String cid, @RequestBody @Valid MyAddress address){
+    public ResponseEntity<ApiResponseBody> createAddress(@PathVariable("cid") Long cid, @RequestBody @Valid MyAddress address){
         address = addressService.insertAddress(cid, address);
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")

@@ -22,7 +22,7 @@ public class CustomerService {
     }
 
 
-    public Customer findById(String id) {
+    public Customer findById(Long id) {
         Optional<Customer> customer = customerRepository.findById(id);
         if(customer.isEmpty()){
             throw new DataNotFoundException("Customer with id '" + id + "' not found!");
@@ -42,7 +42,7 @@ public class CustomerService {
         return Objects.requireNonNullElseGet(customerWithSameEmail, () -> customerRepository.save(customer));
     }
 
-    public Customer update(String id, Customer customer) {
+    public Customer update(Long id, Customer customer) {
         Customer customerOld = findById(id);
 
         customer.setId(customerOld.getId());
@@ -50,7 +50,7 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public Customer delete(String id) {
+    public Customer delete(Long id) {
         Customer customer = findById(id);
         customerRepository.deleteById(id);
         return customer;

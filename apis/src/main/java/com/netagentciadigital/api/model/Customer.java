@@ -18,8 +18,9 @@ import java.util.List;
 public class Customer {
 
     @Id
+    private Long id;
     @NotBlank
-    private String id;
+    private CustomerType type;
     @NotBlank
     private String email;
     @NotBlank

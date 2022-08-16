@@ -20,7 +20,7 @@ public class AddressService {
     }
 
 
-    public MyAddress findByIdCustomerAndId(String cid, String id) {
+    public MyAddress findByIdCustomerAndId(Long cid, Long id) {
         Optional<MyAddress> address = addressRepository.findById(id);
 
         if(address.isEmpty()){
@@ -30,7 +30,7 @@ public class AddressService {
         return address.get();
     }
 
-    public MyAddress insertAddress(String cid, MyAddress address) {
+    public MyAddress insertAddress(Long cid, MyAddress address) {
         address.setId(null);
 
         return addressRepository.saveByCustomerId(cid, address);
