@@ -1,6 +1,8 @@
 package com.netagentciadigital.api.controller;
 
 import com.netagentciadigital.api.model.Product;
+import com.netagentciadigital.api.model.ProductFilter;
+import com.netagentciadigital.api.model.ProductQuery;
 import com.netagentciadigital.api.model.response.ApiResponseBody;
 import com.netagentciadigital.api.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +18,7 @@ import java.util.List;
 @Validated
 @Slf4j
 @RestController
-@RequestMapping("/v1/products")
+@RequestMapping("/v1/product")
 public class ProductController {
 
 
@@ -28,10 +30,10 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponseBody> findAll(@RequestParam(value = "name", required = false) String name){
+    public ResponseEntity<ApiResponseBody> findAll(@RequestBody @Valid ProductFilter productFilter){
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
-                .result(productService.filter(name))
+                .result(productService.filter(productFilter))
             .build();
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -49,21 +51,33 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseBody> create(@RequestBody @Valid List<Product> products){
+    public ResponseEntity<ApiResponseBody> insert(@RequestBody @Valid Product product){
+        product = productService.insert(product);
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
-                .result(productService.create(products))
+                .result(product)
             .build();
+        result.put("productId", product.getId());
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseBody> update(@PathVariable("id") Long id, @RequestBody @Valid Product product){
+    public ResponseEntity<ApiResponseBody> update(@PathVariable("id") Long id, @RequestBody Product product){
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
                 .result(productService.update(id, product))
             .build();
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<ApiResponseBody> search(@RequestBody @Valid ProductQuery productQuery){
+        ApiResponseBody result = ApiResponseBody.builder()
+                .status("200")
+                .result(productService.search(productQuery))
+                .build();
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

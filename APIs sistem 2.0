@@ -12,12 +12,12 @@ POST /v1/category
 PUT  /v1/category/{id}
 POST /v1/attributes
 PUT  /v1/attributes/{id}
-----------------
 POST /v1/product
 PUT  /v1/product/{id}
 POST /v1/product/search
 POST /v1/product/list
 GET  /v1/product/{id}
+----------------
 GET  /v1/product/{id}/attributes
 POST /v1/product/{id}/attributes
 PUT  /v1/product/{id}/attributes

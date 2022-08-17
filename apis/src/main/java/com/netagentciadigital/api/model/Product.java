@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.Id;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -49,7 +50,7 @@ public class Product {
     private String description_mobile;
     private String manufacturer_id;
     private String availability;
-    private List<CategoryDetails> categories;
+    private List<Integer> categories;
     private List<Attribute> attributes;
     private Long attrGroupId;
     private boolean allowGiftWrap = false;
@@ -64,4 +65,6 @@ public class Product {
     private String seo_keywords;
     private List<String> images;
     private String specifications;
+
+    private Date dateAddedFrom;
 }
