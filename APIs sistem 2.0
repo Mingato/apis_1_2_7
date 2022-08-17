@@ -10,9 +10,9 @@ GET  /v1/category/tree/{id}
 GET  /v1/category/{id}
 POST /v1/category
 PUT  /v1/category/{id}
-----------------
 POST /v1/attributes
 PUT  /v1/attributes/{id}
+----------------
 POST /v1/product
 PUT  /v1/product/{id}
 POST /v1/product/search

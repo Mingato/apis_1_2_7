@@ -32,7 +32,7 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponseBody> getAll(@RequestParam(value = "name", required = false) String name){
+    public ResponseEntity<ApiResponseBody> findAll(@RequestParam(value = "name", required = false) String name){
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
                 .result(customerService.filter(name))

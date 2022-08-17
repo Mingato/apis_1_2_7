@@ -26,7 +26,7 @@ public class PaymentController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponseBody> getAll(){
+    public ResponseEntity<ApiResponseBody> findAll(){
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
                 .result(paymentService.findAll())
