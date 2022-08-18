@@ -17,10 +17,10 @@ PUT  /v1/product/{id}
 POST /v1/product/search
 POST /v1/product/list
 GET  /v1/product/{id}
-----------------
 GET  /v1/product/{id}/attributes
 POST /v1/product/{id}/attributes
 PUT  /v1/product/{id}/attributes
+----------------
 GET  /v1/product/stock
 POST /v1/product/stock
 POST /v1/product/price

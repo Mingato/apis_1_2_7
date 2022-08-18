@@ -1,5 +1,6 @@
 package com.netagentciadigital.api.controller;
 
+import com.netagentciadigital.api.model.Attribute;
 import com.netagentciadigital.api.model.Product;
 import com.netagentciadigital.api.model.ProductFilter;
 import com.netagentciadigital.api.model.ProductQuery;
@@ -82,5 +83,38 @@ public class ProductController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}/attributes")
+    public ResponseEntity<ApiResponseBody> findByIdAttributes(@PathVariable("id") Long id){
+        List<Attribute> attributes = productService.findAttributesByIdProduct(id);
+        ApiResponseBody result = ApiResponseBody.builder()
+                .status("200")
+                .result(attributes)
+                .build();
+        result.put("totalCount",attributes.size());
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/attributes")
+    public ResponseEntity<ApiResponseBody> insertAttributes(@PathVariable("id") Long id){
+        List<Attribute> attributes = productService.insertAttributes(id);
+        ApiResponseBody result = ApiResponseBody.builder()
+                .status("200")
+                .result(attributes)
+                .build();
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/attributes")
+    public ResponseEntity<ApiResponseBody> updateAttributes(@PathVariable("id") Long id){
+        List<Attribute> attributes = productService.updateAttributes(id);
+        ApiResponseBody result = ApiResponseBody.builder()
+                .status("200")
+                .result(attributes)
+                .build();
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
 }

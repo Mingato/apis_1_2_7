@@ -20,6 +20,12 @@ public class Attribute {
     @NotBlank
     private String groupName;
 
+    private int isDefault;
+
+    private String codref;
+
+    private int stock;
+
     private List<AttributeOptions> options;
 
     @Data

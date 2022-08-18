@@ -1,6 +1,7 @@
 package com.netagentciadigital.api.service;
 
 import com.netagentciadigital.api.commons.exceptions.DataNotFoundException;
+import com.netagentciadigital.api.model.Attribute;
 import com.netagentciadigital.api.model.Product;
 import com.netagentciadigital.api.model.ProductFilter;
 import com.netagentciadigital.api.model.ProductQuery;
@@ -16,10 +17,13 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
+    private final AttributeService attributeService;
+
 
     @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, AttributeService attributeService) {
         this.productRepository = productRepository;
+        this.attributeService = attributeService;
     }
 
 
@@ -59,4 +63,20 @@ public class ProductService {
         return null;
     }
 
+    public List<Attribute> findAttributesByIdProduct(Long id) {
+        Product product = findById(id);
+
+        //TODO: return the right object
+        return product.getAttributes();
+    }
+
+    public List<Attribute> insertAttributes(Long id) {
+        //TODO: add new attribute
+        return null;
+    }
+
+    public List<Attribute> updateAttributes(Long id) {
+        //TODO: update new attribute
+        return null;
+    }
 }
