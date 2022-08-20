@@ -1,9 +1,6 @@
 package com.netagentciadigital.api.controller;
 
-import com.netagentciadigital.api.model.Attribute;
-import com.netagentciadigital.api.model.Product;
-import com.netagentciadigital.api.model.ProductFilter;
-import com.netagentciadigital.api.model.ProductQuery;
+import com.netagentciadigital.api.model.*;
 import com.netagentciadigital.api.model.response.ApiResponseBody;
 import com.netagentciadigital.api.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +11,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Validated
 @Slf4j
@@ -114,6 +113,55 @@ public class ProductController {
                 .result(attributes)
                 .build();
 
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/stock")
+    public ResponseEntity<ApiResponseBody> getProductStock(@RequestHeader("products") String products){
+        List<String> productIds = Arrays.asList(products.split(";"));
+
+        List<StockResponse> stock = productService.findStockByIdProduct(
+                productIds.stream().map(Long::getLong).collect(Collectors.toList())
+        );
+
+        ApiResponseBody result = ApiResponseBody.builder()
+                .status("200")
+                .result(stock)
+                .build();
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/stock")
+    public ResponseEntity<ApiResponseBody> updateProductStock(@RequestBody List<@Valid StockRequest> stocks){
+        stocks = productService.updateProductStock(stocks);
+        ApiResponseBody result = ApiResponseBody.builder()
+                .status("200")
+                .result(stocks)
+                .build();
+        result.put("recordsChanged", stocks.size());
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/price")
+    public ResponseEntity<ApiResponseBody> updateProductPrice(@RequestBody List<@Valid PriceRequest> prices){
+        prices = productService.updateProductPrice(prices);
+        ApiResponseBody result = ApiResponseBody.builder()
+                .status("200")
+                .result(prices)
+                .build();
+        result.put("recordsChanged", prices.size());
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/promo")
+    public ResponseEntity<ApiResponseBody> updateProductPromo(@RequestBody List<@Valid PromoRequest> promos){
+        promos = productService.updateProductPromo(promos);
+        ApiResponseBody result = ApiResponseBody.builder()
+                .status("200")
+                .result(promos)
+                .build();
+        result.put("recordsChanged", promos.size());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

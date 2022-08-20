@@ -22,9 +22,11 @@ public class Attribute {
 
     private int isDefault;
 
-    private String codref;
+    private String cod_ref;
 
     private int stock;
+
+    private int quantity;
 
     private List<AttributeOptions> options;
 
