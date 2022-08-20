@@ -24,10 +24,10 @@ GET  /v1/product/stock
 POST /v1/product/stock
 POST /v1/product/price
 POST /v1/product/promo ------ falta especificações
-----------------
 GET  /v1/manufacturer
 POST /v1/manufacturer
 PUT  /v1/manufacturer/{id}
+----------------
 POST /v1/order/insert
 POST /v1/order/list
 GET  /v1/order/{id}

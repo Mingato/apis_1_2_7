@@ -1,7 +1,8 @@
-package com.netagentciadigital.api.model;
+package com.netagentciadigital.api.model.shipping;
 
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -11,13 +12,17 @@ import java.math.BigDecimal;
 @Builder
 @Entity
 @Table(name="shipping", schema = "pub")
-public class ShippingCostResult {
+public class Shipping {
 
+    @Id
+    private String id;
 
-    private String code;
     private String title;
+
     private String image;
+
     private String description;
-    private BigDecimal cost;
+
+    private boolean status;
 
 }

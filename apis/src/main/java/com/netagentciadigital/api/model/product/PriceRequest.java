@@ -1,19 +1,20 @@
-package com.netagentciadigital.api.model;
+package com.netagentciadigital.api.model.product;
 
 import lombok.Builder;
 import lombok.Data;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Data
 @Builder
-public class PromoRequest {
+public class PriceRequest {
 
     @NotNull
     private Long id;
 
     @NotNull
-    private BigDecimal price_promo;
+    private BigDecimal new_price;
 
 }

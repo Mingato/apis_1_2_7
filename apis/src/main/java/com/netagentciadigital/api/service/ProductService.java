@@ -1,7 +1,7 @@
 package com.netagentciadigital.api.service;
 
 import com.netagentciadigital.api.commons.exceptions.DataNotFoundException;
-import com.netagentciadigital.api.model.*;
+import com.netagentciadigital.api.model.product.*;
 import com.netagentciadigital.api.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

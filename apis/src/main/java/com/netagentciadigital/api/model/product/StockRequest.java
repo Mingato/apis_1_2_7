@@ -1,4 +1,4 @@
-package com.netagentciadigital.api.model;
+package com.netagentciadigital.api.model.product;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,8 +1,8 @@
 package com.netagentciadigital.api.service;
 
-import com.netagentciadigital.api.model.Shipping;
-import com.netagentciadigital.api.model.ShippingCost;
-import com.netagentciadigital.api.model.ShippingCostResult;
+import com.netagentciadigital.api.model.shipping.Shipping;
+import com.netagentciadigital.api.model.shipping.ShippingCost;
+import com.netagentciadigital.api.model.shipping.ShippingCostResult;
 import com.netagentciadigital.api.repository.ShippingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

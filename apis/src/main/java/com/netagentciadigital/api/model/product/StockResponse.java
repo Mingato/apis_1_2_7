@@ -1,9 +1,8 @@
-package com.netagentciadigital.api.model;
+package com.netagentciadigital.api.model.product;
 
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 

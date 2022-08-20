@@ -1,6 +1,6 @@
 package com.netagentciadigital.api.controller;
 
-import com.netagentciadigital.api.model.*;
+import com.netagentciadigital.api.model.product.*;
 import com.netagentciadigital.api.model.response.ApiResponseBody;
 import com.netagentciadigital.api.service.ProductService;
 import lombok.extern.slf4j.Slf4j;

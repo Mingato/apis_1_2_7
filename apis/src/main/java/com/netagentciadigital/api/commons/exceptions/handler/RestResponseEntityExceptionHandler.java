@@ -1,5 +1,6 @@
 package com.netagentciadigital.api.commons.exceptions.handler;
 
+import com.netagentciadigital.api.commons.exceptions.DataConflictException;
 import com.netagentciadigital.api.commons.exceptions.DataNotFoundException;
 import com.netagentciadigital.api.model.response.ApiResponseBody;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +49,11 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler(value = {DataNotFoundException.class})
     protected ResponseEntity<Object> handleDataNotFound(Exception ex, WebRequest request) {
         return generateObjectResponseEntity(ex, request, "404", HttpStatus.OK);
+    }
+
+    @ExceptionHandler(value = {DataConflictException.class})
+    protected ResponseEntity<Object> handleDataConflict(Exception ex, WebRequest request) {
+        return generateObjectResponseEntity(ex, request, "409", HttpStatus.OK);
     }
 
     @ExceptionHandler(value = {RuntimeException.class, Exception.class})

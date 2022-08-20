@@ -1,8 +1,8 @@
 package com.netagentciadigital.api.controller;
 
-import com.netagentciadigital.api.model.product.Attribute;
+import com.netagentciadigital.api.model.Manufacturer;
 import com.netagentciadigital.api.model.response.ApiResponseBody;
-import com.netagentciadigital.api.service.AttributeService;
+import com.netagentciadigital.api.service.ManufacturerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,57 +15,61 @@ import javax.validation.Valid;
 @Validated
 @Slf4j
 @RestController
-@RequestMapping("/v1/attributes")
-public class AttributeController {
+@RequestMapping("/v1/manufacturer")
+public class ManufacturerController {
 
 
-    private final AttributeService attributeService;
+    private final ManufacturerService manufacturerService;
+
 
     @Autowired
-    public AttributeController(AttributeService attributeService) {
-        this.attributeService = attributeService;
+    public ManufacturerController(ManufacturerService manufacturerService) {
+        this.manufacturerService = manufacturerService;
     }
 
     @GetMapping
     public ResponseEntity<ApiResponseBody> findAll(){
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
-                .result(attributeService.findAll())
+                .result(manufacturerService.findAll())
             .build();
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseBody> findById(@PathVariable("id") String id){
+    public ResponseEntity<ApiResponseBody> findById(@PathVariable("id") Long id){
         log.info(String.valueOf(id));
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
-                .result(attributeService.findById(id))
+                .result(manufacturerService.findById(id))
             .build();
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseBody> create(@RequestBody @Valid Attribute attribute){
-        attribute = attributeService.insert(attribute);
+    public ResponseEntity<ApiResponseBody> insert(@RequestBody @Valid Manufacturer manufacturer){
+        manufacturer = manufacturerService.insert(manufacturer);
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
-                .result(attribute)
+                .result(manufacturer)
             .build();
+        result.put("manufacturerId",manufacturer.getId());
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseBody> update(@PathVariable("id") String id, @RequestBody @Valid Attribute attribute){
+    public ResponseEntity<ApiResponseBody> update(@PathVariable("id") Long id, @RequestBody @Valid Manufacturer manufacturer){
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
-                .result(attributeService.update(id, attribute))
+                .result(manufacturerService.update(id, manufacturer))
             .build();
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+
 
 }

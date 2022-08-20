@@ -1,7 +1,6 @@
 package com.netagentciadigital.api.repository;
 
 import com.netagentciadigital.api.model.Customer;
-import com.netagentciadigital.api.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

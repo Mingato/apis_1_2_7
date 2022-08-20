@@ -1,13 +1,10 @@
 package com.netagentciadigital.api.service;
 
 import com.netagentciadigital.api.commons.exceptions.DataNotFoundException;
-import com.netagentciadigital.api.model.Attribute;
-import com.netagentciadigital.api.model.Payment;
+import com.netagentciadigital.api.model.product.Attribute;
 import com.netagentciadigital.api.repository.AttributeRepository;
-import com.netagentciadigital.api.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Attr;
 
 import java.util.List;
 import java.util.Optional;
