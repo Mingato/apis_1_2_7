@@ -1,8 +1,6 @@
 package com.netagentciadigital.api.controller;
 
 import com.netagentciadigital.api.model.CategoryDetails;
-import com.netagentciadigital.api.model.Customer;
-import com.netagentciadigital.api.model.MyAddress;
 import com.netagentciadigital.api.model.response.ApiResponseBody;
 import com.netagentciadigital.api.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;

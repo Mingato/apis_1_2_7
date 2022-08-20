@@ -18,5 +18,4 @@ public class StockRequest {
     @NotNull
     private int quantity;
 
-
 }

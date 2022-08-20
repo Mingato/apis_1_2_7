@@ -1,7 +1,7 @@
 package com.netagentciadigital.api.controller;
 
-import com.netagentciadigital.api.model.Customer;
-import com.netagentciadigital.api.model.MyAddress;
+import com.netagentciadigital.api.model.customer.Customer;
+import com.netagentciadigital.api.model.customer.MyAddress;
 import com.netagentciadigital.api.model.response.ApiResponseBody;
 import com.netagentciadigital.api.service.AddressService;
 import com.netagentciadigital.api.service.CustomerService;

@@ -1,7 +1,7 @@
 package com.netagentciadigital.api.repository;
 
 import com.netagentciadigital.api.commons.utils.DBInfos;
-import com.netagentciadigital.api.model.MyAddress;
+import com.netagentciadigital.api.model.customer.MyAddress;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

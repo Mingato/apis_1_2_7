@@ -1,11 +1,14 @@
 package com.netagentciadigital.api.service;
 
 import com.netagentciadigital.api.commons.exceptions.DataNotFoundException;
-import com.netagentciadigital.api.model.Customer;
+import com.netagentciadigital.api.model.MyPagination;
+import com.netagentciadigital.api.model.customer.Customer;
+import com.netagentciadigital.api.model.customer.CustomerMailing;
 import com.netagentciadigital.api.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -56,4 +59,19 @@ public class CustomerService {
         return customer;
     }
 
+    public List<CustomerMailing> findMailing(MyPagination myPagination) {
+        List<CustomerMailing> customerMailings = new ArrayList<>();
+        //TODO:find users by pagination, and return by pagination
+
+        for(Customer costumer: customerRepository.findAll()){
+            customerMailings.add(
+                    CustomerMailing.builder()
+                    .name(costumer.getFirstname() + " " + costumer.getLastname())
+                    .email(costumer.getEmail())
+                .build()
+            );
+        }
+
+        return customerMailings;
+    }
 }

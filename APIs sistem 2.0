@@ -1,4 +1,5 @@
 POST /v1/oauth
+----------------
 GET  /v1/shipping
 POST /v1/shipping/{postcep}/{method}
 GET  /v1/payment
@@ -23,11 +24,10 @@ PUT  /v1/product/{id}/attributes
 GET  /v1/product/stock
 POST /v1/product/stock
 POST /v1/product/price
-POST /v1/product/promo ------ falta especificações
+POST /v1/product/promo
 GET  /v1/manufacturer
 POST /v1/manufacturer
 PUT  /v1/manufacturer/{id}
-----------------
 POST /v1/order/insert
 POST /v1/order/list
 GET  /v1/order/{id}
@@ -37,7 +37,9 @@ POST /v1/webhook  	----- WebHooks: envia notificações
 DELETE /v1/webhook
 POST /v1/mailing/({newsletter|customer})
 
+------------- Tarefas ------------------------------------------------------------------------------------
 
+--------------------------------------------------------------------------------------------------------------------------------
 preparação do projeto - 4 horas
 
 temos 38 APIs - 38 horas
