@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Builder
 @Entity
 @Table(name="shipping", schema = "pub")
-public class ShippingCostResult {
+public class ShippingCostResponse {
 
 
     private String code;

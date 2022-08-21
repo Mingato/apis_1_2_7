@@ -1,7 +1,10 @@
 POST /v1/oauth
-----------------
 GET  /v1/shipping
-POST /v1/shipping/{postcep}/{method}
+----------------
+POST /v1/shipping/{postcep}/{method} -- como que será calculado o frete? 
+https://dev.freterapido.com/common/visao_geral/
+https://dev.freterapido.com/ecommerce/verificacao_de_credenciais/
+
 GET  /v1/payment
 POST /v1/customer
 PUT  /v1/customer/{id}

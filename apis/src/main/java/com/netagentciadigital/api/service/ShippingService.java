@@ -1,14 +1,20 @@
 package com.netagentciadigital.api.service;
 
 import com.netagentciadigital.api.model.shipping.Shipping;
-import com.netagentciadigital.api.model.shipping.ShippingCost;
-import com.netagentciadigital.api.model.shipping.ShippingCostResult;
+import com.netagentciadigital.api.model.shipping.ShippingCostRequest;
+import com.netagentciadigital.api.model.shipping.ShippingCostResponse;
 import com.netagentciadigital.api.repository.ShippingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Null;
 import java.util.List;
 
+@Validated
 @Service
 public class ShippingService {
 
@@ -25,14 +31,15 @@ public class ShippingService {
         return shippingRepository.findAll();
     }
 
+    /**
+     *  https://www.erlaniofreire.com.br/web/post/calcular-frete-com-a-api-dos-correios/62*/
+    public ShippingCostResponse calculateShipping(
+            Long cep,
+            @Valid @Null @Min(3) @Max(20) String method,
+            ShippingCostRequest shippingCost) {
 
-    public ShippingCostResult calculateShipping(String cep, ShippingCost shippingCost) {
-        //TODO:Consulta o frete baseado no CEP informado, retornando as formas de entrega disponíveis
-        //com os valores respectivos.
-        return null;
-    }
-
-    public ShippingCostResult calculateShipping(String cep, String method, ShippingCost shippingCost) {
+        //TODO: https://www.erlaniofreire.com.br/web/post/calcular-frete-com-a-api-dos-correios/62
+        //https://dev.freterapido.com/ecommerce/verificacao_de_credenciais/
         //TODO:Consulta o frete baseado no CEP informado, retornando as formas de entrega disponíveis
         //com os valores respectivos.
         return null;
