@@ -40,11 +40,11 @@ public class ShippingController {
     @PostMapping("/{cep}")
     public ResponseEntity<ApiResponseBody> calculateShipping(
             @PathVariable("cep") Long cep,
-            @RequestBody @Valid ShippingCostRequest shippingCost){
+            @RequestBody @Valid ShippingCostRequest shippingCostRequest){
 
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
-                .result(shippingService.calculateShipping(cep, null, shippingCost))
+                .result(shippingService.calculateShipping(cep, null, shippingCostRequest))
             .build();
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -54,11 +54,11 @@ public class ShippingController {
     public ResponseEntity<ApiResponseBody> calculateShipping(
             @PathVariable(value = "cep") Long cep,
             @PathVariable(value = "method", required = false) String method,
-            @RequestBody @Valid ShippingCostRequest shippingCost){
+            @RequestBody @Valid ShippingCostRequest shippingCostRequest){
 
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
-                .result(shippingService.calculateShipping(cep, method, shippingCost))
+                .result(shippingService.calculateShipping(cep, method, shippingCostRequest))
                 .build();
 
         return new ResponseEntity<>(result, HttpStatus.OK);

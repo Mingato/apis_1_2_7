@@ -9,10 +9,7 @@ import java.math.BigDecimal;
 
 @Data
 @Builder
-@Entity
-@Table(name="shipping", schema = "pub")
 public class ShippingCostResponse {
-
 
     private String code;
     private String title;

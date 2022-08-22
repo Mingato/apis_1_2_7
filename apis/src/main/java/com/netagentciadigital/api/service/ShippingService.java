@@ -15,6 +15,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Null;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Validated
 @Service
@@ -36,7 +37,9 @@ public class ShippingService {
     public Shipping findById(String id){
         Optional<Shipping> shipping = shippingRepository.findById(id);
         if(shipping.isEmpty()){
-            throw new DataNotFoundException("Shipping '"+id+"' not found");
+            List<Shipping> shippings = shippingRepository.findAll();
+            List<String> ids = shippings.stream().map(Shipping::getId).collect(Collectors.toList());
+            throw new DataNotFoundException("Shipping '"+id+"' not found, shipping available: " + ids);
         }
 
         return shipping.get();
@@ -47,13 +50,19 @@ public class ShippingService {
     public ShippingCostResponse calculateShipping(
             Long cep,
             @Valid @Null @Min(3) @Max(20) String method,
-            ShippingCostRequest shippingCost) {
+            ShippingCostRequest shippingCostRequest) {
 
-        findById(method);
+        if(method != null && !method.isEmpty()){
+            findById(method);
+        }
+
         //TODO: https://www.erlaniofreire.com.br/web/post/calcular-frete-com-a-api-dos-correios/62
         //https://dev.freterapido.com/ecommerce/verificacao_de_credenciais/
+        //https://traycorp.desk360.com.br/ajuda/article/cotacao-de-frete-via-api-publica
         //TODO:Consulta o frete baseado no CEP informado, retornando as formas de entrega disponíveis
         //com os valores respectivos.
-        return null;
+
+        return ShippingCostResponse.builder()
+                .build();
     }
 }
